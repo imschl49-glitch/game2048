@@ -65,13 +65,20 @@ class Game2048 {
         document.getElementById('retry-button').addEventListener('click', () => this.init());
         
         let startX, startY;
+
+        const gameContainer = document.querySelector('.game-container');
+        if (!gameContainer) return;
+
+        gameContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
         
-        document.addEventListener('touchstart', (e) => {
+        gameContainer.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
-        });
+        }, { passive: true });
         
-        document.addEventListener('touchend', (e) => {
+        gameContainer.addEventListener('touchend', (e) => {
             if (!startX || !startY) return;
             
             let endX = e.changedTouches[0].clientX;
@@ -96,7 +103,7 @@ class Game2048 {
             
             startX = null;
             startY = null;
-        });
+        }, { passive: true });
     }
     
     handleKeyPress(e) {
@@ -317,4 +324,8 @@ class Game2048 {
 
 document.addEventListener('DOMContentLoaded', () => {
     new Game2048();
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+    }
 });
