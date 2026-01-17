@@ -22,6 +22,18 @@ class Game2048 {
         }
         return true;
     }
+
+    getLayoutMetrics() {
+        const gameContainer = document.querySelector('.game-container');
+        const style = getComputedStyle(gameContainer);
+        const cell = parseFloat(style.getPropertyValue('--cell'));
+        const gap = parseFloat(style.getPropertyValue('--gap'));
+
+        return {
+            cell: Number.isFinite(cell) ? cell : 106,
+            gap: Number.isFinite(gap) ? gap : 15,
+        };
+    }
     
     init() {
         this.grid = Array(this.size).fill().map(() => Array(this.size).fill(0));
@@ -252,11 +264,14 @@ class Game2048 {
     }
     
     createTile(value, row, col) {
+        const { cell, gap } = this.getLayoutMetrics();
+        const step = cell + gap;
+
         const tile = document.createElement('div');
         tile.className = `tile tile-${value}`;
         tile.textContent = value;
-        tile.style.left = `${col * 121}px`;
-        tile.style.top = `${row * 121}px`;
+        tile.style.left = `${col * step}px`;
+        tile.style.top = `${row * step}px`;
         
         setTimeout(() => {
             tile.classList.add('tile-new');
