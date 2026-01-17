@@ -10,8 +10,8 @@
     --pad: 15px;
     --cell: calc((var(--board-size) - (2 * var(--pad)) - (3 * var(--gap))) / 4);
 
-    --bg-0: #fff0f7;
-    --bg-1: #ffe3f2;
+    --bg-0: #f6f1f4;
+    --bg-1: #efe7ec;
     --text: #4a2a3b;
     --muted: rgba(74, 42, 59, 0.75);
 
@@ -33,12 +33,13 @@ body {
     font-size: 18px;
     color: var(--text);
     background: radial-gradient(1200px 800px at 20% 0%, var(--bg-1), transparent 60%),
-        radial-gradient(900px 700px at 90% 10%, #ffe8fb, transparent 55%),
+        radial-gradient(900px 700px at 90% 10%, #f1e9ef, transparent 55%),
         linear-gradient(180deg, var(--bg-0), #ffffff);
     line-height: 1.65;
     min-height: 100vh;
     min-height: 100dvh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .container {
