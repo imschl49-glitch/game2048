@@ -24,14 +24,20 @@ class Game2048 {
     }
 
     getLayoutMetrics() {
-        const gameContainer = document.querySelector('.game-container');
-        const style = getComputedStyle(gameContainer);
-        const cell = parseFloat(style.getPropertyValue('--cell'));
-        const gap = parseFloat(style.getPropertyValue('--gap'));
+        const cellEl = document.querySelector('.grid-cell');
+        const rowEl = document.querySelector('.grid-row');
+
+        const cell = cellEl ? cellEl.getBoundingClientRect().width : NaN;
+
+        let gap = NaN;
+        if (rowEl) {
+            const rowStyle = getComputedStyle(rowEl);
+            gap = parseFloat(rowStyle.gap) || parseFloat(rowStyle.columnGap) || parseFloat(rowStyle.rowGap);
+        }
 
         return {
-            cell: Number.isFinite(cell) ? cell : 106,
-            gap: Number.isFinite(gap) ? gap : 15,
+            cell: Number.isFinite(cell) && cell > 0 ? cell : 106,
+            gap: Number.isFinite(gap) && gap >= 0 ? gap : 15,
         };
     }
     
